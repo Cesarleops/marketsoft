@@ -6,6 +6,7 @@ const sale = dbClient.define("Sale", {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   userId: {
     field: "user_id",

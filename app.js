@@ -6,6 +6,8 @@ import salesRouter from "./routes/sales.js";
 
 export const app = express();
 
+app.use(express.json());
+
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/providers", providersRouter);
