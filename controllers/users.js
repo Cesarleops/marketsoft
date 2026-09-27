@@ -43,6 +43,10 @@ export const createUser = async (req, res) => {
 
     res.status(201).json(user);
   } catch (e) {
+    if (e.name === "SequelizeUniqueConstraintError") {
+      res.status(409).json({ message: "Email already in use" });
+      return;
+    }
     console.log("Failed to create user", e.message);
     res.status(500).json({ message: "Failed to create user" });
   }
@@ -61,13 +65,17 @@ export const updateUser = async (req, res) => {
     }
 
     await user.update({
-      name: name ?? user.name,
-      email: email ?? user.email,
-      role: role ?? user.role,
+      name,
+      email,
+      role,
     });
 
     res.json(user);
   } catch (e) {
+    if (e.name === "SequelizeUniqueConstraintError") {
+      res.status(409).json({ message: "Email already in use" });
+      return;
+    }
     console.log("Failed to update user");
     res.status(500).json({ message: "Failed to update user" });
   }
@@ -87,6 +95,12 @@ export const deleteUser = async (req, res) => {
 
     res.status(204).send();
   } catch (e) {
+    if (e.name === "SequelizeForeignKeyConstraintError") {
+      res
+        .status(409)
+        .json({ message: "User has sales and cannot be deleted" });
+      return;
+    }
     console.log("Failed to delete user");
     res.status(500).json({ message: "Failed to delete user" });
   }
