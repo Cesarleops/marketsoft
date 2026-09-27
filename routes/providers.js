@@ -1,11 +1,18 @@
 import { Router } from "express";
+import {
+  createProvider,
+  deleteProvider,
+  getProviderById,
+  getProviders,
+  updateProvider,
+} from "../controllers/providers.js";
 
-const providersRouter = Router()
+const providersRouter = Router();
 
-providersRouter.get("/");
-providersRouter.get("/:id");
-providersRouter.post("/");
-providersRouter.put("/:id");
-providersRouter.delete("/:id");
+providersRouter.get("/", getProviders);
+providersRouter.get("/:id", getProviderById);
+providersRouter.post("/", createProvider);
+providersRouter.put("/:id", updateProvider);
+providersRouter.delete("/:id", deleteProvider);
 
-export default providersRouter
+export default providersRouter;
