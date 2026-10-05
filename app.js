@@ -3,10 +3,12 @@ import productsRouter from "./routes/products.js";
 import providersRouter from "./routes/providers.js";
 import usersRouter from "./routes/users.js";
 import salesRouter from "./routes/sales.js";
+import cors from "cors";
 
 export const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
